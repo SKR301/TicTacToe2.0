@@ -2,10 +2,10 @@ html, body {
 	height: 100%;
   }
   
-.board-container {
+#board-container {
 	height: 100%;
 }
 
-.board {
+#board {
 	width: 700px;
 }
