@@ -7,30 +7,33 @@ class Cell {
 	}	
 
 	getRow() {
-		return m_row;
+		return this.m_col;
 	}
 
 	getCol() {
-		return m_col;
+		return this.m_col;
 	}
 
 	getVal() {
-		return m_val;
+		return this.m_val;
 	}
 
 	getTTL() {
-		return m_ttl;
+		return this.m_ttl;
 	}
 
 	setVal(val) {
-		m_val = val;
+		this.m_val = val;
 	}
 
 	updateTTL() {
-		m_ttl = m_ttl - 1;
+		if(this.m_ttl == 0) return;
+		this.m_ttl = m_ttl - 1;
 	}
 
 	isEmpty() {
-		return m_val == '';
+		return this.m_val == '';
 	}
 };
+
+export {Cell};
