@@ -1,6 +1,5 @@
 class Cell {
 	constructor(row, col) {
-		console.log("CELL constructor called");
 		this.m_row = row;
 		this.m_col = col;
 		this.m_val = '';
@@ -27,8 +26,14 @@ class Cell {
 		this.m_val = val;
 	}
 
+	setTTL(ttl) {
+		this.m_ttl = ttl;
+	}
+
 	updateTTL() {
-		if(this.m_ttl == 0) return;
+		if(this.m_ttl == 0) {
+			return;
+		}
 		this.m_ttl = this.m_ttl - 1;
 	}
 
@@ -39,7 +44,6 @@ class Cell {
 
 class Box {
 	constructor() {
-		console.log("BOX constructor called");
 		this.m_cells = [
 			[
 				new Cell(0,0),
@@ -62,11 +66,17 @@ class Box {
 	}
 
 	fillCell(row, col, val) {
+
 		if(!this.m_cells[row][col].isEmpty()){
-			return;
+			return false;
 		}
 		this.m_cells[row][col].setVal(val);
+
+		if(this.m_cells[row][col].getTTL() == 0){
+			this.m_cells[row][col].setTTL(7);
+		}
 		this.m_cells[row][col].updateTTL();
+		return true;
 	}
 
 	checkIsWin() {
@@ -111,7 +121,6 @@ class Box {
 
 class Game {
 	constructor() {
-		console.log("GAME constructor called");
 		this.m_curr_symbol = 'X';
 		this.m_prev_moves = [];
 	}
@@ -130,9 +139,26 @@ class Game {
 
 	addMoveToList(row, col) {
 		if(this.m_prev_moves.length >= 7){
-			this.m_prev_moves.shift;
+			this.m_prev_moves.shift();
 		}
 		this.m_prev_moves.push({"row": row, "col": col});
+	}
+
+	reduceCellTTL(B) {
+		this.m_prev_moves.forEach((row_and_col) => {
+			B.m_cells[row_and_col.row][row_and_col.col].updateTTL();
+			if(B.m_cells[row_and_col.row][row_and_col.col].getTTL() == 0){
+				B.m_cells[row_and_col.row][row_and_col.col].setVal('');
+			}
+		});
+	}
+
+	printCellTTL(B) {
+		var ttls = '';
+		this.m_prev_moves.forEach((row_and_col) => {
+			ttls += B.m_cells[row_and_col.row][row_and_col.col].getTTL();
+		});
+		console.log(ttls);
 	}
 
 	getMoveList() {
@@ -144,24 +170,32 @@ var G =  new Game();
 var B =  new Box();
 
 function divClick(element) {
-	console.log(element);
 	row_and_col = element.id.slice(-2);
 	row = row_and_col[0];
 	col = row_and_col[1];
 
-	B.fillCell(row, col, G.getCurrSymbol());
+	if(!B.fillCell(row, col, G.getCurrSymbol())){
+		return;
+	}
+
 	if(B.checkIsWin()){
 		alert(G.getCurrSymbol() + ' WON ');
 	}
+
 	G.addMoveToList(row, col);
 	G.updateCurrentSymbol();
 
 	var moveList = G.getMoveList();
 
+	G.reduceCellTTL(B);
+
 	moveList.forEach(({row, col}) => {
+		var elementId = 'cell' + row + col;
+
 		if(B.m_cells[row][col].getTTL() > 0){
-			var elementId = 'cell' + row + col;
 			document.getElementById(elementId).innerHTML = B.m_cells[row][col].getVal();
+		} else {
+			document.getElementById(elementId).innerHTML = '&#8203;';92
 		}
 	});
 }
