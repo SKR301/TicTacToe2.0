@@ -193,9 +193,14 @@ function divClick(element) {
 		var elementId = 'cell' + row + col;
 
 		if(B.m_cells[row][col].getTTL() > 0){
+			if(B.m_cells[row][col].getTTL() == 1){
+				document.getElementById(elementId).style['opacity'] = 0.5;
+			} else {
+				document.getElementById(elementId).style['opacity'] = 1;
+			}
 			document.getElementById(elementId).innerHTML = B.m_cells[row][col].getVal();
 		} else {
-			document.getElementById(elementId).innerHTML = '&#8203;';92
+			document.getElementById(elementId).innerHTML = '&#8203;';
 		}
 	});
 }
