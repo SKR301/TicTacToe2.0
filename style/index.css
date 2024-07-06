@@ -1,11 +1,13 @@
-html, body {
-	height: 100%;
-  }
-  
-#board-container {
-	height: 100%;
+#board {
+	width: 400px;
 }
 
-#board {
-	width: 700px;
+@media screen and (max-width: 400px) {
+	#board-container {
+		height: 100%;
+		width: 100%;	
+	}
+	#board {
+		width: 100%;
+	}
 }

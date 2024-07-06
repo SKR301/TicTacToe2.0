@@ -3,7 +3,7 @@ class Cell {
 		this.m_row = row;
 		this.m_col = col;
 		this.m_val = '';
-		this.m_ttl = 7;
+		this.m_ttl = 8;
 	}	
 
 	getRow() {
@@ -73,7 +73,7 @@ class Box {
 		this.m_cells[row][col].setVal(val);
 
 		if(this.m_cells[row][col].getTTL() == 0){
-			this.m_cells[row][col].setTTL(7);
+			this.m_cells[row][col].setTTL(8);
 		}
 		this.m_cells[row][col].updateTTL();
 		return true;
@@ -138,7 +138,7 @@ class Game {
 	}
 
 	addMoveToList(row, col) {
-		if(this.m_prev_moves.length >= 7){
+		if(this.m_prev_moves.length >= 8){
 			this.m_prev_moves.shift();
 		}
 		this.m_prev_moves.push({"row": row, "col": col});
