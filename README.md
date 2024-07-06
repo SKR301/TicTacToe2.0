@@ -1,4 +1,4 @@
-# [TicTacToe2.0] (https://tictactoe2-3871f.web.app/)
+# [TicTacToe2.0](https://tictactoe2-3871f.web.app/)
 A newer and longer version of legendary TicTacToe game. [Click here](https://tictactoe2-3871f.web.app/)
 
 ## Table of Content
