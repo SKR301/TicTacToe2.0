@@ -118,7 +118,7 @@ class Box {
 		return false;
 	}
 }
-
+ 
 class Game {
 	constructor() {
 		this.m_curr_symbol = 'X';
