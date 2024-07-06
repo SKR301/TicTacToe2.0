@@ -2,6 +2,10 @@
 	width: 400px;
 }
 
+.alert {
+	display: none;
+}
+
 @media screen and (max-width: 400px) {
 	#board-container {
 		height: 100%;

@@ -123,14 +123,28 @@ class Game {
 	constructor() {
 		this.m_curr_symbol = 'X';
 		this.m_prev_moves = [];
+		this.m_winner = '';
 	}
 
 	getCurrSymbol() {
 		return this.m_curr_symbol;
 	}
 
-	declareWinner() {
-		// TODO
+	declareWinner(B) {
+		if(B.checkIsWin()){
+			if(G.getCurrSymbol() == 'X'){
+				document.getElementById("winnerX").style['display'] = 'block';
+				this.m_winner = 'X';
+			}
+			if(G.getCurrSymbol() == 'O'){
+				document.getElementById("winnerO").style['display'] = 'block';
+				this.m_winner = 'O';
+			}
+		}
+	}
+
+	getWinner() {
+		return this.m_winner;
 	}
 
 	updateCurrentSymbol() {
@@ -170,6 +184,11 @@ var G =  new Game();
 var B =  new Box();
 
 function divClick(element) {
+	console.log(G.getWinner());
+	if(G.getWinner() != ''){
+		return;
+	}
+
 	row_and_col = element.id.slice(-2);
 	row = row_and_col[0];
 	col = row_and_col[1];
@@ -178,9 +197,7 @@ function divClick(element) {
 		return;
 	}
 
-	if(B.checkIsWin()){
-		alert(G.getCurrSymbol() + ' WON ');
-	}
+	G.declareWinner(B);
 
 	G.addMoveToList(row, col);
 	G.updateCurrentSymbol();
